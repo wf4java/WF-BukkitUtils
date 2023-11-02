@@ -13,6 +13,8 @@ public class DefaultCommandHandlerMessages implements ConfigDefaultValues {
 
     private static DefaultCommandHandlerMessages instance;
 
+
+
     private DefaultCommandHandlerMessages() {
         values = Arrays.asList(
                 new ConfigDefaultValue("COMMAND.DEFAULT.WRITE_ALL_ARGUMENTS","Write all arguments!"),

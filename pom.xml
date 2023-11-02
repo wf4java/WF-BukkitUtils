@@ -23,9 +23,9 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/wf4java/WF-Utils</url>
-        <connection>scm:git:git://github.com/wf4java/WF-Utils.git</connection>
-        <developerConnection>scm:git:git@github.com:wf4java/WF-Utils.git</developerConnection>
+        <url>https://github.com/wf4java/WF-BukkitUtils</url>
+        <connection>scm:git:git://github.com/wf4java/WF-BukkitUtils.git</connection>
+        <developerConnection>scm:git:git@github.com:wf4java/WF-BukkitUtils.git</developerConnection>
     </scm>
 
     <distributionManagement>

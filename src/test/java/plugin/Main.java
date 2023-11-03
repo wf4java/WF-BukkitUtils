@@ -48,7 +48,7 @@ public class Main extends JavaPlugin implements Listener {
                 .setDefaultLanguages("ru", "en")
                 .build();
 
-       languageCommand.getMess(null, "VILLAGER.SET");
+       languageCommand.getMessage(null, "VILLAGER.SET");
 
 
 

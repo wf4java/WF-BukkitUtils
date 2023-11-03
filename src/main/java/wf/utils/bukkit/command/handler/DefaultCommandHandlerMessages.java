@@ -29,6 +29,7 @@ public class DefaultCommandHandlerMessages implements ConfigDefaultValues {
                 new ConfigDefaultValue("COMMAND.DEFAULT.ARGUMENT.ONLINE_PLAYER_ARGUMENT_WRONG","This argument is not valid, enter online player name!"),
                 new ConfigDefaultValue("COMMAND.DEFAULT.ARGUMENT.BOOLEAN_ARGUMENT_WRONG","This argument is not valid, enter true/false!"),
                 new ConfigDefaultValue("COMMAND.DEFAULT.ARGUMENT.DOUBLE_ARGUMENT_WRONG","This argument is not valid, enter a number!"),
+                new ConfigDefaultValue("COMMAND.DEFAULT.ARGUMENT.INTEGER_ARGUMENT_WRONG","This argument is not valid, enter a number(integer)"),
                 new ConfigDefaultValue("COMMAND.DEFAULT.ARGUMENT.CONFIGURATION_SECTION_ARGUMENT_WRONG","This argument is not valid, enter valid name!"));
     }
 
@@ -52,11 +53,12 @@ COMMAND:
             BOOLEAN_ARGUMENT_WRONG: This argument is not valid, enter true/false!
             DOUBLE_ARGUMENT_WRONG: This argument is not valid, enter a number!
             INTEGER_ARGUMENT_WRONG: This argument is not valid, enter a number(integer)!
+            CONFIGURATION_SECTION_ARGUMENT_WRONG: This argument is not valid, enter valid name!
 */
 
 
     public static DefaultCommandHandlerMessages getInstance() {
-        if(instance == null) instance = new DefaultCommandHandlerMessages();
+        if (instance == null) instance = new DefaultCommandHandlerMessages();
         return instance;
     }
 

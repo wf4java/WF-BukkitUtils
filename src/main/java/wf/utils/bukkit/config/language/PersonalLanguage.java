@@ -6,6 +6,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import wf.utils.bukkit.config.BukkitConfig;
 import wf.utils.bukkit.config.language.models.Language;
+import wf.utils.bukkit.config.language.models.LanguageType;
 import wf.utils.bukkit.config.language.models.MessageReceiver;
 import wf.utils.java.file.yamlconfiguration.configuration.ConfigDefaultValue;
 import wf.utils.java.file.yamlconfiguration.configuration.ConfigDefaultValues;
@@ -114,6 +115,11 @@ public class PersonalLanguage implements Language {
     public void setPlayerLanguage(String player, String language){
         optionsConfig.set("players." + player + ".language", language);
         optionsConfig.save();
+    }
+
+    @Override
+    public LanguageType getLanguageType() {
+        return LanguageType.PERSONAL;
     }
 
     @Override

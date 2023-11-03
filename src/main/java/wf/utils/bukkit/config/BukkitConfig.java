@@ -42,7 +42,6 @@ public class BukkitConfig {
     private static HashMap<UniquenessLoopTaskKey, MultipleLoopTask> autoSaveLoopTaskMap;
 
 
-
     public BukkitConfig(Plugin plugin, String configName){
         this(plugin, configName, true);
     }
@@ -58,6 +57,7 @@ public class BukkitConfig {
             } catch (IOException e) {throw new RuntimeException(e);}
         }
         config = YamlConfiguration.loadConfiguration(file);
+
     }
 
     public BukkitConfig(Plugin plugin, String configName, boolean autoCopy, SaveType saveType, int autoSaveSeconds, boolean autoSaveUnique){

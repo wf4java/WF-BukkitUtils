@@ -25,18 +25,17 @@ import java.util.stream.Collectors;
 
 public class CommandHandler implements CommandExecutor, TabExecutor {
 
-    private JavaPlugin plugin;
+
+    private final JavaPlugin plugin;
     private String ownCommandName;
     private TreeMap<String, SubCommand> subcommands = new TreeMap<String, SubCommand>((str1, str2) -> str1.compareTo(str2) * -1);
     private Language language;
-    private LanguageType languageType;
 
 
 
     public CommandHandler(JavaPlugin plugin, String[] commands, Language language, boolean addDefaultCommands) {
         this.plugin = plugin;
         this.language = language;
-        this.languageType = LanguageType.getLanguageType(language);
         this.ownCommandName = commands[0];
         for(String command : commands){
             plugin.getCommand(command).setExecutor(this);
@@ -52,7 +51,6 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
     public CommandHandler(JavaPlugin plugin, String command, Language language) {
         this.plugin = plugin;
         this.language = language;
-        this.languageType = LanguageType.getLanguageType(language);
         plugin.getCommand(command).setExecutor(this);
         plugin.getCommand(command).setTabCompleter(this);
         this.ownCommandName = command;
@@ -146,31 +144,31 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
 
                     if(availableCommandsCount == 0){
                         if(language == null) sender.sendMessage("Not found available commands!");
-                        else sender.sendMessage(getMess(sender,"COMMAND.DEFAULT.NOT_FOUND_AVAILABLE_COMMANDS"));
+                        else sender.sendMessage(getMessage(sender,"COMMAND.DEFAULT.NOT_FOUND_AVAILABLE_COMMANDS"));
                     }
                 })
                 .build());
 
 
         if(language != null && language.getAvailableLanguages().size() > 1) {
-            if (languageType == LanguageType.GENERAL) {
+            if (language.getLanguageType() == LanguageType.GENERAL) {
                 addSubcommand(new SubCommandBuilder()
                         .setCommand("language")
                         .setPermission("wf.language.change")
                         .setArguments(new Argument(BukkitArgumentType.LANGUAGE(language)))
                         .setRunnable((sender, command, args) -> {
                             ((GeneralLanguage) language).selectLanguage(plugin, (String) args[0]);
-                            sender.sendMessage(ChatColor.YELLOW + getMess(sender, "COMMAND.DEFAULT.LANGUAGE_CHANGE")
+                            sender.sendMessage(ChatColor.YELLOW + getMessage(sender, "COMMAND.DEFAULT.LANGUAGE_CHANGE")
                                     .replace("%{lang}", ChatColor.AQUA + (String) args[0]));
                         })
                         .build());
-            } else if (languageType == LanguageType.PERSONAL) {
+            } else if (language.getLanguageType() == LanguageType.PERSONAL) {
                 addSubcommand(new SubCommandBuilder()
                         .setCommand("language")
                         .setArguments(new Argument(BukkitArgumentType.LANGUAGE(language)))
                         .setRunnable((sender, command, args) -> {
                             ((PersonalLanguage) language).setPlayerLanguage(sender.getName(), (String) args[0]);
-                            sender.sendMessage(ChatColor.YELLOW + getMess(sender, "COMMAND.DEFAULT.LANGUAGE_CHANGE")
+                            sender.sendMessage(ChatColor.YELLOW + getMessage(sender, "COMMAND.DEFAULT.LANGUAGE_CHANGE")
                                     .replace("%{lang}", ChatColor.AQUA + (String) args[0]));
                         })
                         .build());
@@ -192,18 +190,12 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
 
     public MessageReceiver getMessageReceiver(String player){
         if(language == null) return null;
-        if(languageType == LanguageType.PERSONAL) return ((PersonalLanguage) language).getMessageReceiver(player);
-        if(languageType == LanguageType.GENERAL) return ((GeneralLanguage) language).getMessageReceiver();
-        return null;
+        return language.getMessageReceiver(player);
     }
 
-
-
-    public String getMess(CommandSender sender, String path){
-        if(language == null) return null;
-        if(languageType == LanguageType.GENERAL) return ((GeneralLanguage) language).mess(path);
-        if(languageType == LanguageType.PERSONAL) return ((PersonalLanguage) language).getMessageReceiver(sender.getName()).get(path);
-        return path;
+    public String getMessage(CommandSender sender, String path){
+        if(language == null) return path;
+        return language.getMessageReceiver(sender.getName()).get(path);
     }
 
     public TreeMap<String, SubCommand> getSubcommands() {

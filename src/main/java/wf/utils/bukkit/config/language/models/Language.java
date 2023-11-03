@@ -11,7 +11,9 @@ public interface Language {
         return null;
     }
     public List<String> getAvailableLanguages();
+    public LanguageType getLanguageType();
 
+    public MessageReceiver getMessageReceiver(String name);
 
 
 }

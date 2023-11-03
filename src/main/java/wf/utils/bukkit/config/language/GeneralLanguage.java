@@ -1,9 +1,11 @@
 package wf.utils.bukkit.config.language;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
 import wf.utils.bukkit.config.BukkitConfig;
 import wf.utils.bukkit.config.language.models.Language;
+import wf.utils.bukkit.config.language.models.LanguageType;
 import wf.utils.bukkit.config.language.models.MessageReceiver;
 import wf.utils.java.file.yamlconfiguration.configuration.ConfigDefaultValue;
 
@@ -80,15 +82,18 @@ public class GeneralLanguage implements Language {
        return files;
     }
 
+
     public static List<String> getExistingConfigs(Plugin plugin, String path){
         ArrayList<String> fileNames = new ArrayList<>(Arrays.asList(Objects.requireNonNull(new File(plugin.getDataFolder(), path).list())));
         fileNames.remove("options.yml");
+
         return fileNames.stream().map((f) -> {return f.split("\\.")[0];}).collect(Collectors.toList());
     }
 
     public static void copyFromResource(Plugin plugin, String path){
         File file = new File(plugin.getDataFolder(), path);
         if (!file.exists()) {plugin.saveResource(path, true);}
+
     }
 
     public void selectLanguage(Plugin plugin, String lang){
@@ -122,7 +127,7 @@ public class GeneralLanguage implements Language {
             }
         };
     }
-    public MessageReceiver getMessageReceiver(){
+    public MessageReceiver getMessageReceiver(String name){
         return messageReceiver;
     }
 
@@ -148,6 +153,11 @@ public class GeneralLanguage implements Language {
 
     public List<String> getAvailableLanguages() {
         return availableLanguages;
+    }
+
+    @Override
+    public LanguageType getLanguageType() {
+        return LanguageType.GENERAL;
     }
 
     public void setAvailableLanguages(List<String> availableLanguages) {

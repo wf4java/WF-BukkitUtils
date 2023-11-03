@@ -119,7 +119,7 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
                     tabulation.add(subcommandArgs[args.length - 1]);
                 }else if(args.length <= subcommandArgs.length + entry.getValue().getSubCommandExecutor().getArguments().length){
                     return entry.getValue().getSubCommandExecutor().getArguments()[args.length - subcommandArgs.length - 1]
-                            .getType().tabulation((Player)sender, args[args.length - 1]);
+                            .getType().tabulation(sender, args[args.length - 1]);
                 }
 
             }

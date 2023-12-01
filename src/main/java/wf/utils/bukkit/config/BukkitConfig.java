@@ -16,7 +16,7 @@ import org.bukkit.util.Vector;
 import wf.utils.bukkit.config.utils.ConfigSerializable;
 
 
-import wf.utils.bukkit.misc.while_runnable.BukkitMultipleLoopTask;
+import wf.utils.bukkit.misc.thread.BukkitMultipleLoopTask;
 import wf.utils.java.file.yamlconfiguration.utils.StringSerializable;
 import wf.utils.java.file.yamlconfiguration.utils.types.IntegerInRange;
 import wf.utils.java.file.yamlconfiguration.utils.types.IntegerRandom;

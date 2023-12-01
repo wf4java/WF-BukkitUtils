@@ -1,4 +1,4 @@
-# WF-Utils
+# WF-BukkitUtils
 ## Maven:
 ```
  <dependency>

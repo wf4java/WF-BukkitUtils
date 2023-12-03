@@ -13,6 +13,7 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
+import wf.utils.bukkit.config.utils.BukkitConfigBuilder;
 import wf.utils.bukkit.config.utils.ConfigSerializable;
 
 
@@ -180,6 +181,10 @@ public class BukkitConfig {
             if(!replace && config.contains(value.getPath())) continue;
             config.set(value.getPath(), value.getValue());
         }
+    }
+
+    public static BukkitConfigBuilder builder() {
+        return new BukkitConfigBuilder();
     }
 
     public void set(String path, Object value){

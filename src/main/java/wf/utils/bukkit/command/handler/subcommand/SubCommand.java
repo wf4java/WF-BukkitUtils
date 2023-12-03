@@ -74,7 +74,8 @@ public class SubCommand {
     }
 
 
-    public SubCommandBuilder builder(){
+
+    public static SubCommandBuilder builder(){
         return new SubCommandBuilder();
     }
 

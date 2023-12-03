@@ -218,6 +218,9 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
         return language;
     }
 
+    public static CommandHandlerBuilder builder() {
+        return new CommandHandlerBuilder();
+    }
 
 
 

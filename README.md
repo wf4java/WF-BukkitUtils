@@ -1,5 +1,6 @@
 # WF-BukkitUtils
 ## Maven:
+`Java(min): 17`
 ```
  <dependency>
    <groupId>io.github.wf4java</groupId>

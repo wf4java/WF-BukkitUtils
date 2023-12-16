@@ -3,6 +3,8 @@ package wf.utils.bukkit.command.handler.subcommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import wf.utils.bukkit.command.handler.subcommand.executor.Argument;
 import wf.utils.bukkit.command.handler.subcommand.executor.SubCommandExecutor;
 import wf.utils.bukkit.config.language.models.MessageReceiver;
 import wf.utils.java.functions.TriConsumer;
@@ -22,42 +24,25 @@ public class SubCommand {
 
     }
 
-    public SubCommand(String command, String permission, SubCommandExecutor commandBuilder, TriConsumer<CommandSender, Command, Object[]> runnable, boolean onlyPlayer) {
+    public SubCommand(String command, String permission, Argument[] arguments, TriConsumer<CommandSender, Command, Object[]> runnable, boolean onlyPlayer) {
         this.command = command;
         this.permission = permission;
-        this.subCommandExecutor = commandBuilder;
         this.runnable = runnable;
         this.onlyPlayer = onlyPlayer;
+        this.subCommandExecutor = new SubCommandExecutor(command, arguments);
     }
 
-    public SubCommand(String permission, SubCommandExecutor commandBuilder, TriConsumer<CommandSender, Command, Object[]> runnable, boolean onlyPlayer) {
-        this.permission = permission;
-        this.subCommandExecutor = commandBuilder;
-        this.runnable = runnable;
-        this.onlyPlayer = onlyPlayer;
-    }
 
-    public SubCommand(SubCommandExecutor commandBuilder, TriConsumer<CommandSender, Command, Object[]> runnable) {
-        this.subCommandExecutor = commandBuilder;
-        this.runnable = runnable;
-    }
-
-    public SubCommand(String permission, SubCommandExecutor commandBuilder, TriConsumer<CommandSender, Command, Object[]> runnable) {
-        this.permission = permission;
-        this.subCommandExecutor = commandBuilder;
-        this.runnable = runnable;
-    }
-
-    public SubCommand(SubCommandExecutor commandBuilder, TriConsumer<CommandSender, Command, Object[]> runnable, boolean onlyPlayer) {
-        this.subCommandExecutor = commandBuilder;
-        this.runnable = runnable;
-        this.onlyPlayer = onlyPlayer;
-    }
 
 
     public void onCommand(CommandSender sender, Command command, String[] args, int argsPosition, MessageReceiver msg){
         if(!checkPermission(sender)){
             sender.sendMessage(ChatColor.RED + ("\n" + (msg == null ? "You not have permission!" : msg.get("COMMAND.DEFAULT.YOU_NOT_HAVE_PERMISSION"))));
+            return;
+        }
+
+        if(onlyPlayer && (!(sender instanceof Player))){
+            sender.sendMessage(ChatColor.RED + ("\n" + (msg == null ? "This command is for players only!" : msg.get("COMMAND.DEFAULT.YOU_NOT_HAVE_PERMISSION"))));
             return;
         }
 

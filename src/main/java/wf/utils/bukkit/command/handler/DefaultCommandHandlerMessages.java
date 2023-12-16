@@ -20,6 +20,7 @@ public class DefaultCommandHandlerMessages implements ConfigDefaultValues {
                 new ConfigDefaultValue("COMMAND.DEFAULT.WRITE_ALL_ARGUMENTS","Write all arguments!"),
                 new ConfigDefaultValue("COMMAND.DEFAULT.COMMAND_NOT_FOUND","Command not found!"),
                 new ConfigDefaultValue("COMMAND.DEFAULT.NOT_FOUND_AVAILABLE_COMMANDS","Not found available commands!"),
+                new ConfigDefaultValue("COMMAND.DEFAULT.ONLY_PLAYER_COMMAND","This command is for players only!"),
                 new ConfigDefaultValue("COMMAND.DEFAULT.YOU_NOT_HAVE_PERMISSION","You not have permission!"),
                 new ConfigDefaultValue("COMMAND.DEFAULT.LANGUAGE_CHANGE", "You change language on: %{lang}"),
                 new ConfigDefaultValue("COMMAND.DEFAULT.ARGUMENT.BLOCK_ARGUMENT_WRONG","This argument is not valid, enter minecraft block name!"),

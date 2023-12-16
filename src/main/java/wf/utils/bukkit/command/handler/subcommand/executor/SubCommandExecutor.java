@@ -22,7 +22,7 @@ public class SubCommandExecutor {
 
     public SubCommandExecutor(String command, Argument... arguments) {
         this.command = command;
-        this.arguments = arguments;
+        this.arguments = arguments != null ? arguments : new Argument[0];
     }
 
 

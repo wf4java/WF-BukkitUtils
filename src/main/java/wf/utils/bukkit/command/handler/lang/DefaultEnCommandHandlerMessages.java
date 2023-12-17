@@ -1,21 +1,21 @@
-package wf.utils.bukkit.command.handler;
+package wf.utils.bukkit.command.handler.lang;
 
+import wf.utils.bukkit.config.language.utils.DefaultMessages;
 import wf.utils.java.file.yamlconfiguration.configuration.ConfigDefaultValue;
 import wf.utils.java.file.yamlconfiguration.configuration.ConfigDefaultValues;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-public class DefaultCommandHandlerMessages implements ConfigDefaultValues {
+public class DefaultEnCommandHandlerMessages implements DefaultMessages {
 
 
     private final Collection<ConfigDefaultValue> values;
 
-    private static DefaultCommandHandlerMessages instance;
+    private static DefaultEnCommandHandlerMessages instance;
 
 
-
-    private DefaultCommandHandlerMessages() {
+    private DefaultEnCommandHandlerMessages() {
         values = Arrays.asList(
                 new ConfigDefaultValue("COMMAND.DEFAULT.WRITE_ALL_ARGUMENTS","Write all arguments!"),
                 new ConfigDefaultValue("COMMAND.DEFAULT.COMMAND_NOT_FOUND","Command not found!"),
@@ -58,8 +58,8 @@ COMMAND:
 */
 
 
-    public static DefaultCommandHandlerMessages getInstance() {
-        if (instance == null) instance = new DefaultCommandHandlerMessages();
+    public static DefaultEnCommandHandlerMessages getInstance() {
+        if (instance == null) instance = new DefaultEnCommandHandlerMessages();
         return instance;
     }
 
@@ -69,4 +69,8 @@ COMMAND:
     }
 
 
+    @Override
+    public String getLang() {
+        return "en";
+    }
 }

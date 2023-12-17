@@ -8,6 +8,7 @@ import wf.utils.bukkit.config.BukkitConfig;
 import wf.utils.bukkit.config.language.models.Language;
 import wf.utils.bukkit.config.language.models.LanguageType;
 import wf.utils.bukkit.config.language.models.MessageReceiver;
+import wf.utils.bukkit.config.language.utils.DefaultMessagesManager;
 import wf.utils.java.file.yamlconfiguration.configuration.ConfigDefaultValue;
 import wf.utils.java.file.yamlconfiguration.configuration.ConfigDefaultValues;
 
@@ -26,7 +27,7 @@ public class PersonalLanguage implements Language {
 
 
 
-    public PersonalLanguage(Plugin plugin, String path, Collection<ConfigDefaultValue> defaultValues) {
+    public PersonalLanguage(Plugin plugin, String path, DefaultMessagesManager defaultValues) {
         this(plugin, path, new String[0], defaultValues);
     }
 
@@ -37,7 +38,7 @@ public class PersonalLanguage implements Language {
         this(plugin, path, dl, null);
     }
 
-    public PersonalLanguage(Plugin plugin, String path, String[] dl, Collection<ConfigDefaultValue> defaultValues) {
+    public PersonalLanguage(Plugin plugin, String path, String[] dl, DefaultMessagesManager defaultValues) {
         this.path = path;
         optionsConfig = new BukkitConfig(plugin,path + File.separator + "options",false);
 
@@ -63,9 +64,9 @@ public class PersonalLanguage implements Language {
         return files;
     }
 
-    private void loadAllLanguages(Plugin plugin, List<String> languages, Collection<ConfigDefaultValue> defaultValues){
+    private void loadAllLanguages(Plugin plugin, List<String> languages, DefaultMessagesManager defaultValues){
         for(String lang : languages){
-            BukkitConfig config = new BukkitConfig(plugin,path + File.separator + lang,false, defaultValues);
+            BukkitConfig config = new BukkitConfig(plugin,path + File.separator + lang,false, defaultValues.getDefaultValues(lang).getValues());
             allLanguages.add(config);
             allReceivers.put(lang, createMessageReceiver(config.getConfig(), lang));
         }

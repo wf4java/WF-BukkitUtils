@@ -7,6 +7,7 @@ import wf.utils.bukkit.config.BukkitConfig;
 import wf.utils.bukkit.config.language.models.Language;
 import wf.utils.bukkit.config.language.models.LanguageType;
 import wf.utils.bukkit.config.language.models.MessageReceiver;
+import wf.utils.bukkit.config.language.utils.DefaultMessagesManager;
 import wf.utils.java.file.yamlconfiguration.configuration.ConfigDefaultValue;
 
 
@@ -23,13 +24,13 @@ public class GeneralLanguage implements Language {
     private BukkitConfig languageConfig;
     private BukkitConfig optionsConfig;
     private String path;
-    private final Collection<ConfigDefaultValue> defaultValues;
+    private final DefaultMessagesManager defaultValues;
     private String selectedLanguage;
     private MessageReceiver messageReceiver;
 
 
 
-    public GeneralLanguage(Plugin plugin, String path, Collection<ConfigDefaultValue> defaultValues) {
+    public GeneralLanguage(Plugin plugin, String path, DefaultMessagesManager defaultValues) {
         this(plugin, path, new String[0], defaultValues);
     }
 
@@ -41,7 +42,7 @@ public class GeneralLanguage implements Language {
         this(plugin, path, dl, null);
     }
 
-    public GeneralLanguage(Plugin plugin, String path, String[] dl, Collection<ConfigDefaultValue> defaultValues) {
+    public GeneralLanguage(Plugin plugin, String path, String[] dl, DefaultMessagesManager defaultValues) {
         this.path = path;
         this.defaultValues = defaultValues;
         optionsConfig = new BukkitConfig(plugin,path + File.separator + "options",false);
@@ -97,7 +98,7 @@ public class GeneralLanguage implements Language {
     }
 
     public void selectLanguage(Plugin plugin, String lang){
-        languageConfig = new BukkitConfig(plugin,path + File.separator + lang,false, defaultValues);
+        languageConfig = new BukkitConfig(plugin,path + File.separator + lang,false, defaultValues.getDefaultValues(lang).getValues());
         optionsConfig.set("general_language", lang);
         optionsConfig.save();
         selectedLanguage = lang;

@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import wf.utils.bukkit.command.handler.handler.ExecutionCommand;
 import wf.utils.bukkit.command.handler.subcommand.executor.Argument;
 import wf.utils.bukkit.command.handler.subcommand.executor.SubCommandExecutor;
 import wf.utils.bukkit.config.language.models.MessageReceiver;
@@ -16,7 +17,7 @@ public class SubCommand {
     private String command;
     private String permission;
     private SubCommandExecutor subCommandExecutor;
-    private TriConsumer<CommandSender, Command, Object[]> runnable;
+    private TriConsumer<CommandSender, ExecutionCommand, Object[]> runnable;
     private boolean onlyPlayer = false;
 
 
@@ -24,7 +25,7 @@ public class SubCommand {
 
     }
 
-    public SubCommand(String command, String permission, Argument[] arguments, TriConsumer<CommandSender, Command, Object[]> runnable, boolean onlyPlayer) {
+    public SubCommand(String command, String permission, Argument[] arguments, TriConsumer<CommandSender, ExecutionCommand, Object[]> runnable, boolean onlyPlayer) {
         this.command = command;
         this.permission = permission;
         this.runnable = runnable;
@@ -35,7 +36,7 @@ public class SubCommand {
 
 
 
-    public void onCommand(CommandSender sender, Command command, String[] args, int argsPosition, MessageReceiver msg){
+    public void onCommand(CommandSender sender, ExecutionCommand command, String[] args, int argsPosition, MessageReceiver msg){
         if(!checkPermission(sender)){
             sender.sendMessage(ChatColor.RED + ("\n" + (msg == null ? "You not have permission!" : msg.get("COMMAND.DEFAULT.YOU_NOT_HAVE_PERMISSION"))));
             return;
@@ -80,11 +81,11 @@ public class SubCommand {
         this.subCommandExecutor = subCommandExecutor;
     }
 
-    public TriConsumer<CommandSender, Command, Object[]> getRunnable() {
+    public TriConsumer<CommandSender, ExecutionCommand, Object[]> getRunnable() {
         return runnable;
     }
 
-    public void setRunnable(TriConsumer<CommandSender, Command, Object[]> runnable) {
+    public void setRunnable(TriConsumer<CommandSender, ExecutionCommand, Object[]> runnable) {
         this.runnable = runnable;
     }
 

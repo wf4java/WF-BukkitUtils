@@ -1,7 +1,7 @@
 package wf.utils.bukkit.command.handler.handler;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import wf.utils.bukkit.command.handler.DefaultCommandHandlerMessages;
+import wf.utils.bukkit.command.handler.lang.DefaultCommandHandlerMessagesManager;
 import wf.utils.bukkit.config.language.GeneralLanguage;
 import wf.utils.bukkit.config.language.models.Language;
 import wf.utils.bukkit.config.language.models.LanguageType;
@@ -71,15 +71,12 @@ public class CommandHandlerBuilder {
 
     private Language createLanguage(){
         if(languagePath == null) return null;
-        if(languageType == LanguageType.GENERAL){return new GeneralLanguage(plugin, languagePath, defaultLanguages.toArray(new String[0]), getValues());}
-        if(languageType == LanguageType.PERSONAL){return new PersonalLanguage(plugin, languagePath, defaultLanguages.toArray(new String[0]), getValues());}
+        if(languageType == LanguageType.GENERAL){return new GeneralLanguage(plugin, languagePath, defaultLanguages.toArray(new String[0]), DefaultCommandHandlerMessagesManager.getInstance());}
+        if(languageType == LanguageType.PERSONAL){return new PersonalLanguage(plugin, languagePath, defaultLanguages.toArray(new String[0]), DefaultCommandHandlerMessagesManager.getInstance());}
         return null;
     }
 
-    private Collection<ConfigDefaultValue> getValues(){
-        if(values == null) return DefaultCommandHandlerMessages.getInstance().getValues();
-        return concatenateValues(DefaultCommandHandlerMessages.getInstance().getValues(), values);
-    }
+
 
     private static Collection<ConfigDefaultValue> concatenateValues(Collection<ConfigDefaultValue> a, Collection<ConfigDefaultValue> b) {
         a.addAll(b);

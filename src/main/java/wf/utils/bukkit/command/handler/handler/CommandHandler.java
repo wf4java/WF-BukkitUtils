@@ -11,12 +11,10 @@ import wf.utils.bukkit.command.handler.subcommand.SubCommand;
 import wf.utils.bukkit.command.handler.subcommand.SubCommandBuilder;
 import wf.utils.bukkit.command.handler.subcommand.executor.Argument;
 import wf.utils.bukkit.command.handler.subcommand.executor.types.bukkit.BukkitArgumentType;
-import wf.utils.bukkit.command.handler.DefaultCommandHandlerMessages;
 import wf.utils.bukkit.config.language.*;
 import wf.utils.bukkit.config.language.models.Language;
 import wf.utils.bukkit.config.language.models.LanguageType;
 import wf.utils.bukkit.config.language.models.MessageReceiver;
-import wf.utils.java.file.yamlconfiguration.configuration.ConfigDefaultValue;
 
 
 import java.util.*;
@@ -28,7 +26,8 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
 
     private final JavaPlugin plugin;
     private String ownCommandName;
-    private TreeMap<String, SubCommand> subcommands = new TreeMap<String, SubCommand>((str1, str2) -> str1.compareTo(str2) * -1);
+    private HashMap<String, SubCommand> subcommands = new HashMap<>();
+    private TreeMap<String, SubCommand> sortedSubcommands = new TreeMap<String, SubCommand>((str1, str2) -> str1.compareTo(str2) * -1);
     private Language language;
 
 
@@ -86,7 +85,7 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
             String[] subcommandArgs = entry.getKey().split("\\.");
             String full = String.join(".", Arrays.copyOfRange(args,0, subcommandArgs.length));
             if(full.equalsIgnoreCase(String.join(".", subcommandArgs))){
-                entry.getValue().onCommand(sender, command, args, subcommandArgs.length, msg);
+                entry.getValue().onCommand(sender, new ExecutionCommand(command, this, msg), args, subcommandArgs.length, msg);
                 return true;
             }
         }
@@ -181,11 +180,13 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
     public void addSubcommand(String command, SubCommand subcommand) {
         subcommand.getSubCommandExecutor().setCommand("/" + ownCommandName + " " + String.join(" ", command.split("\\.")) );
         subcommands.put(command, subcommand);
+        sortedSubcommands.put(subcommand.getCommand(), subcommand);
     }
 
     public void addSubcommand(SubCommand subcommand) {
         subcommand.getSubCommandExecutor().setCommand("/" + ownCommandName + " " + String.join(" ", subcommand.getCommand().split("\\.")) );
         subcommands.put(subcommand.getCommand(), subcommand);
+        sortedSubcommands.put(subcommand.getCommand(), subcommand);
     }
 
     public MessageReceiver getMessageReceiver(String player){
@@ -198,13 +199,20 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
         return language.getMessageReceiver(sender.getName()).get(path);
     }
 
-    public TreeMap<String, SubCommand> getSubcommands() {
-        return subcommands;
+    public Map<String, SubCommand> getSubcommands() {
+        return Collections.unmodifiableMap(subcommands);
     }
 
-    public void setSubcommands(TreeMap<String, SubCommand> subcommands) {
+    public void setSubcommands(HashMap<String, SubCommand> subcommands) {
         this.subcommands = subcommands;
+        sortedSubcommands.putAll(subcommands);
     }
+
+    public Map<String, SubCommand> getSortedSubcommands() {
+        return Collections.unmodifiableMap(sortedSubcommands);
+    }
+
+
 
     public String getOwnCommandName() {
         return ownCommandName;

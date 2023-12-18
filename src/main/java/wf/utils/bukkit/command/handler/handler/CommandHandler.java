@@ -128,12 +128,14 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
     }
 
     public void addDefaultCommands(){
-        addSubcommand(new SubCommandBuilder()
+        addSubcommand(SubCommand.builder()
                 .setCommand("allcommands")
                 .setRunnable((sender, command, args) -> {
                     int availableCommandsCount = 0;
 
-                    for(Map.Entry<String, SubCommand> entry : subcommands.entrySet()){
+                    for(Map.Entry<String, SubCommand> entry : sortedSubcommands.entrySet()){
+                        if(entry.getKey().equals("allcommands")) continue;
+
                         if(entry.getValue().checkPermission(sender)){
                             if(availableCommandsCount == 0) sender.sendMessage("\n");
                             sender.sendMessage(entry.getValue().getSubCommandExecutor().getArgumentsText());
@@ -151,7 +153,7 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
 
         if(language != null && language.getAvailableLanguages().size() > 1) {
             if (language.getLanguageType() == LanguageType.GENERAL) {
-                addSubcommand(new SubCommandBuilder()
+                addSubcommand(SubCommand.builder()
                         .setCommand("language")
                         .setPermission("wf.language.change")
                         .setArguments(new Argument(BukkitArgumentType.LANGUAGE(language)))
@@ -162,7 +164,7 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
                         })
                         .build());
             } else if (language.getLanguageType() == LanguageType.PERSONAL) {
-                addSubcommand(new SubCommandBuilder()
+                addSubcommand(SubCommand.builder()
                         .setCommand("language")
                         .setArguments(new Argument(BukkitArgumentType.LANGUAGE(language)))
                         .setRunnable((sender, command, args) -> {
